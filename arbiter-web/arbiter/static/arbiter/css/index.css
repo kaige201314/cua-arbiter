@@ -1,21 +1,20 @@
-#top {
-    width: auto;
-    height: 30px;
-    background: #80d8ff;
-    white-space: nowrap;
+.col
+{
+
+    padding:0 !important;
 }
-#top span{
-    float: right;
-}
+
 #slide-nav {
     white-space: nowrap;
 }
 
-#root {
-    display: flex;
-    flex-flow: column wrap;
-    margin-left: 300px;
-}
+/*#root {*/
+    /*display: flex;*/
+    /*flex-flow: column wrap;*/
+    /*margin-left: 300px;*/
+/*}*/
+
+
 #root-guide {
 
 }
@@ -24,14 +23,10 @@
 }
 
 #top-nav {
-    margin-top: 30px;
     font-family:微软雅黑;
     height: 45px;
-    width: 100%;
-    top: 0;
-    left: 300px;
-    position:fixed;
     vertical-align: middle;
+
 }
 
 #case_sumary_name {
@@ -62,7 +57,6 @@
 
 #code {
     height: 800px;
-    margin-top: 45px;
 }
 #code-content {
     width: 100%;
