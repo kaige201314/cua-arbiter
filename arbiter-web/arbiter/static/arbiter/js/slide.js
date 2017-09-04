@@ -1,11 +1,64 @@
+function getusername() {
+    let storage = window.localStorage;
+    let username = storage['username'];
+    return username ? username : "登录";
+
+}
+
 $(document).ready(function () {
     let username = getusername();
-    new Vue({
+    user_app = new Vue({
         el: '#username',
-        data: {
-            message: username
+        data: function () {
+            if (username === '登录') {
+                return {
+                    message: {
+                        username: username,
+                        classes: 'btn waves-effect waves-teal',
+                        href: 'login',
+                        islogin: false
+
+
+                    }
+                }
+            }
+            else
+            {
+                    return {
+                    message: {
+                        username: username,
+                        classes: 'dropdown-button btn waves-effect waves-teal btn-flat',
+                        href: '',
+                        islogin: true
+
+
+                    }
+                }
+
+            }}
+
+    });
+    user_list_app = new Vue({
+        el: '#usr_dropdown',
+        data: function () {
+            if (username === '登录') {
+                return {
+                    data: {
+                        itemList: {}
+                    }
+                }
+            }
+            else {
+                return {
+                    data: {
+                        itemList: {}
+                    }
+                }
+            }
+
         }
     });
+
     fetch("./getCaseList",
         {
             method: "POST",
@@ -22,15 +75,7 @@ $(document).ready(function () {
             return response.json();
     }).then(
         json => {
-            let model_list = json["model_list"];
-            let case_list = json["case_list"];
-            let case_app = new Vue({
-                props: ['todo'],
-                el: '#nav-slide-case',
-                data: {
-                    caseList: case_list
-                }
-            });
+            let model_list = json
             let slide_app = new Vue({
                 props: ['todo'],
                 el: '#nav-slide',
@@ -150,6 +195,18 @@ $(document).ready(function () {
                 storage.clear();
                 window.location.href = ".";
             });
+            //初始化下拉菜单
+            $('.dropdown-button').dropdown({
+                    inDuration: 300,
+                    outDuration: 225,
+                    constrain_width: false, // Does not change width of dropdown to that of the activator
+                    hover: false, // Activate on hover
+                    gutter: 0, // Spacing from edge
+                    belowOrigin: false, // Displays dropdown below the button
+                    alignment: 'left' // Displays dropdown with edge aligned to the left of button
+                }
+            );
+            $('body').show();
         }
     );
 

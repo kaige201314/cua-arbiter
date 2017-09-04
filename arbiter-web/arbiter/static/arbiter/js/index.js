@@ -9,12 +9,7 @@ function deleteAllCookies() {
     }
 }
 
-function getusername() {
-    let storage = window.localStorage;
-    let username = storage['username'];
-    return username ? username : "guest";
 
-}
 
 $(document).ready(function () {
 

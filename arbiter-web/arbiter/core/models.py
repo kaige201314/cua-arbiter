@@ -20,21 +20,23 @@ class CaseList:
             log_list.append(line.decode('utf-8').rstrip())
         # 修改显示名称
         case_list = []
-        case_description_list = []
-        model_list = []
+        res_tree = {}
+        case_map = {}
+        case_name = None
         for elem in log_list:
             if elem.find("Preparing test case main") != -1:
                 temp = elem.split("Preparing test case main.")[1]
+                model = temp.split(".")[1]
+                case_name = temp[::-1].replace(".", ":", 2).replace(":", ".", 1)[::-1]
+                if model not in res_tree:
+                    res_tree[model] = {}
+                case_map = res_tree[model]
+                case_map[case_name] = temp[::-1].replace(".", ":", 2).replace(":", ".", 1)[::-1]
                 case_list.append(
                     temp[::-1].replace(".", ":", 2).replace(":", ".", 1)[::-1])
-                model_list.append(temp.split(".")[1])
             elif elem.find(" ... ok") != -1:
                 des_str = elem.split(" ...")[0]
                 if "main.cases" in des_str:
                     des_str = des_str.split("main.cases.")[1].split(".", 1)[1]
-                case_description_list.append(des_str)
-        case_res = dict(zip(case_list, case_description_list))
-        model_res = list(set(model_list))
-        # model_res.sort(model_list.index())
-        context = {'case_list': case_res, 'model_list': model_res}
-        return context;
+                case_map[case_name] = des_str
+        return res_tree
