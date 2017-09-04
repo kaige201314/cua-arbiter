@@ -28,11 +28,11 @@
         <div id="arbiter-navbar">
             <nav class="col s10 offset-s2 top-nav teal">
                 <div class="nav-wrapper">
-                    <a href="#" class="brand-logo"></a>
+                    <a href="#" id="case_sumary_name"></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li><a href="./">总览</a></li>
-                        <li><a href="./">用例管理</a></li>
-                        <li><a href="./logmanage">日志管理</a></li>
+                        <li><a target="_blank" href="./">总览</a></li>
+                        <li><a target="_blank" href="./">用例管理</a></li>
+                        <li><a target="_blank" href="./logmanage">日志管理</a></li>
                         <li><a href="#" data-activates="nav-mobile" class="button-collapse11"><i
                                 class="material-icons">menu</i></a></li>
                     </ul>
@@ -50,7 +50,7 @@
                         <a :href="message.href">
                             <span :class="message.classes"
                                   data-activates='usr_dropdown'>{% templatetag openvariable %}message.username{% templatetag closevariable %}
-                                 <i v-if="message.islogin" class="material-icons dp20">keyboard_arrow_down</i>
+                                 <i v-if="message.islogin" class="material-icons dp20">arrow_drop_down</i>
                             </span>
                         </a>
                         <ul id='usr_dropdown' class='dropdown-content'>
@@ -85,20 +85,29 @@
             </div>
             <div id="root-case" class="">
                 <casename hidden>{{ request.path }}</casename>
-                <div id="top-nav">
-                    <span id="case_sumary_name">请点击选择用例</span>
+                <div>
                     <span id="casepath" casepath="" hidden></span>
-                    <div id="case_operation">
-                        <a id="edit" class="waves-effect waves-light btn green">
-                            <i id="save-edit-icon"
-                               class="material-icons run-edit-i">mode_edit</i><span>编辑</span></a>
-                        <a id="run" class="waves-effect waves-light btn green">
-                            <i id="run-icon" class="material-icons run-edit-i">near_me</i>
-                            <span>运行</span>
-                        </a>
-                    </div>
                 </div>
                 <div id="code">
+                    <div id="code-float-btn" class="fixed-action-btn click-to-toggle"
+                         style="bottom: 45px; right: 24px;">
+                        <a class="btn-floating btn-large blue">
+                            <i class="material-icons">pan_tool</i>
+                        </a>
+                        <ul>
+                            <li><a id="edit" class="btn-floating red"
+                                   style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;">
+                                <i id="save-edit-icon"
+                                   class="material-icons run-edit-i">mode_edit</i>
+                                <span>编辑</span></a>
+                            </li>
+                            <li><a id="run" class="btn-floating yellow darken-1"
+                                   style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;">
+                                <i id="run-icon" class="material-icons run-edit-i">play_arrow</i>
+                                <span>运行</span></a>
+                            </li>
+                        </ul>
+                    </div>
                     <pre id="code-content"></pre>
                     <div id="modal_log" class="modal">
                         <div class="modal-content">
@@ -109,6 +118,7 @@
                             <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat"><i
                                     class="material-icons">clear</i></a>
                         </div>
+
                     </div>
                     <div id="modal-save" class="modal">
                         <div class="modal-content">

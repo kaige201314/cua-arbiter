@@ -76,7 +76,7 @@ function setBtn(type) {
     if (type === "save") {
         //设置为保存按钮状态
         $("#edit").find("span").text("保存");
-        $("#save-edit-icon").text("done");
+        $("#save-edit-icon").text("save");
     }
     if (type === "edit") {
         //设置为保存按钮状态
