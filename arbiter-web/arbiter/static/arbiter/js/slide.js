@@ -139,19 +139,7 @@ $(document).ready(function () {
                                 return setBtn("save");
                             } else if ($("#edit").find("span").text() === "保存") {
                                 //点击保存，不刷新按钮，调后端保存文件，成功后返回
-                                //打开保存进度框
-                                let modalConfig = {
-                                    dismissible: false, // Modal can be dismissed by clicking outside of the modal
-                                    opacity: .7,
-                                    complete: function () {
-                                        $("#pro-loading" + " > div").html("");
-                                    } // Callback for Modal close// Opacity of modal background
-                                };
-                                /*设置保存模态框效果*/
-                                $("#modal-save").modal("open", modalConfig);
-                                //设置正常速度魔兽进度条加载
-                                doProgress();
-
+                                $("#modal-save").modal("open");
                                 let newCodeContent = codeContent.getValue();
                                 fetch("/arbiter/save/",
                                     {
@@ -171,7 +159,7 @@ $(document).ready(function () {
                                     //检查响应文本
                                     response.json().then(function (data) {
                                         if (data['result'] === "ok") {
-                                            process_speed = 1;
+                                            $("#pro-center").html('<i class="material-icons large cyan-text text-darken-4">done</i>');
 
                                         } else {
                                             alert("保存失败！");

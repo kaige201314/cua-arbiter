@@ -58,23 +58,6 @@
     width: 400px;
 }
 
-#pro-loading {
-    width: 400px;
-    height: 48px;
-    background: url(../imgs/bg-pro.png) no-repeat;
-}
-
-#pro-loading div {
-    width: 0px;
-    height: 48px;
-    background: url(../imgs/progress.png) no-repeat;
-    color: #fff;
-    text-align: center;
-    font-family: Tahoma;
-    font-size: 18px;
-    line-height: 48px;
-}
-
 #pro-message {
     width: 200px;
     height: 10px;

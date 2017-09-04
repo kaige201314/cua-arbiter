@@ -87,45 +87,6 @@ function setBtn(type) {
     }
 }
 
-let process_value = 0;
-let process_speed = 0;//0正常，1代表收到保存成功，加快
-function doProgress() {
-    if (process_speed === 0) {
-        if (process_value === 95) {//正常速度下，如果进度95%，则不继续加载
-            setTimeout(doProgress, 300);
-            setProgress(process_value);
-        } else if (process_value < 65) {
-            setTimeout(doProgress, 300);
-            setProgress(process_value);
-            process_value++;
-        } else if (process_value < 85) {
-            setTimeout(doProgress, 100);
-            setProgress(process_value);
-            process_value++;
-        } else if (process_value < 95) {
-            setTimeout(doProgress, 300);
-            setProgress(process_value);
-            process_value++;
-        }
-
-    } else if (process_speed === 1) {//保存成功信号，加快速度
-        //如果加到100，stop
-        if (process_value === 100) {
-            setProgress(process_value);
-            $(".modal-save-footer").show();
-            let timeoutid = setTimeout(doProgress, 300);
-            clearTimeout(timeoutid);
-            process_value = 0;
-            process_speed = 0;
-        } else {
-            setProgress(process_value);
-            setTimeout(doProgress, 10);
-            process_value++;
-        }
-
-    }
-}
-
 /**
  * 解决csrf问题
  * @param name
@@ -147,13 +108,3 @@ function getCookie(name) {
     return cookieValue;
 }
 
-/*进度条*/
-function setProgress(progress) {
-    let progress_id = "pro-loading";
-    if (progress) {
-        let jq_progress_id = $("#" + progress_id + " > div");
-        jq_progress_id.css("width", String(progress) + "%"); //控制#loading div宽度
-        // $("#" + progress_id + " > div").html(String(progress) + "%"); //显示百分比
-        jq_progress_id.html("保存中");
-    }
-}
