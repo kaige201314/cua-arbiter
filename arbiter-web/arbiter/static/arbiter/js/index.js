@@ -75,7 +75,9 @@ function getCaseName() {
 function setBtn(type) {
     if (type === "save") {
         //设置为保存按钮状态
-        $("#edit").find("span").text("保存");
+        let jq_edit =  $("#edit");
+        jq_edit.find("span").text("保存");
+         jq_edit.attr("title","保存");
         $("#save-edit-icon").text("save");
     }
     if (type === "edit") {

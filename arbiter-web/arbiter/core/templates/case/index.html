@@ -91,36 +91,43 @@
                 <div id="code">
                     <div id="code-float-btn" class="fixed-action-btn click-to-toggle"
                          style="bottom: 45px; right: 24px;">
-                        <a class="btn-floating btn-large blue">
+                        <a class="btn-floating btn-large blue" title="操作">
                             <i class="material-icons">pan_tool</i>
                         </a>
                         <ul>
                             <li><a id="edit" class="btn-floating red"
-                                   style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;">
+                                   style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;" title="编辑">
                                 <i id="save-edit-icon"
                                    class="material-icons run-edit-i">mode_edit</i>
                                 <span>编辑</span></a>
                             </li>
                             <li><a id="run" class="btn-floating yellow darken-1"
-                                   style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;">
+                                   style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;" title="运行">
                                 <i id="run-icon" class="material-icons run-edit-i">play_arrow</i>
                                 <span>运行</span></a>
+                            </li>
+                            <li><a id="run" class="btn-floating green darken-1"
+                                   style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;" title="日志">
+                                <i id="log-icon" class="material-icons">message</i>
+                                <span>日志</span></a>
                             </li>
                         </ul>
                     </div>
                     <pre id="code-content"></pre>
-                    <div id="modal_log" class="modal">
-                        <div class="modal-content">
+                    <div id="modal-log" class="modal modal-fixed-footer">
+                        <div class="modal-content ">
+
                             <ul id="insert">
                             </ul>
                         </div>
                         <div class="modal-footer">
-                            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat"><i
-                                    class="material-icons">clear</i></a>
+                             <a id="clearLog" class="waves-effect waves-teal btn">清空</a>
+                            <a class="modal-action modal-close waves-effect waves-teal btn-flat">关闭</a>
+
                         </div>
 
                     </div>
-                    <div id="modal-save" class="modal">
+                    <div id="modal-save" class="modal modal-fixed-footer">
                         <div class="modal-content">
                             <div id="pro-center">
                                 <div id="pro-message"></div>

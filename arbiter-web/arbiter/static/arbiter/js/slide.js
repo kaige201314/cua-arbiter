@@ -22,9 +22,8 @@ $(document).ready(function () {
                     }
                 }
             }
-            else
-            {
-                    return {
+            else {
+                return {
                     message: {
                         username: username,
                         classes: 'dropdown-button btn waves-effect waves-teal btn-flat',
@@ -35,7 +34,8 @@ $(document).ready(function () {
                     }
                 }
 
-            }}
+            }
+        }
 
     });
     user_list_app = new Vue({
@@ -121,7 +121,7 @@ $(document).ready(function () {
                                 window.location.href = "login";
                             }
                             RunWebSocketTest();
-                            $('#modal_log').modal('open');
+                            $('#modal-log').modal('open');
                         });
                         let edit_selector = $("#edit");
                         //编辑
@@ -194,6 +194,13 @@ $(document).ready(function () {
                 let storage = window.localStorage;
                 storage.clear();
                 window.location.href = ".";
+            });
+
+            $("#log-icon").click(function (e) {
+                $('#modal-log').modal('open');
+            });
+            $("#clearLog").click(function (e) {
+                $('#insert').text("")
             });
             //初始化下拉菜单
             $('.dropdown-button').dropdown({
