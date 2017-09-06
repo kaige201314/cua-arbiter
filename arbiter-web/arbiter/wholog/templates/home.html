@@ -36,14 +36,14 @@
           <div class="input-field col s6">
               <strong id="start-text">从</strong>
               <input id="start-date" type="text" placeholder="请输入开始日期" class="datepicker">
-              <input id="end-time" type="text" placeholder="请输入开始时间" class="timepicker">
+              <input id="start-time" type="text" placeholder="请输入开始时间" class="timepicker">
               <strong id="end-text">到</strong>
               <input id="end-date" type="text" placeholder="请输入开始日期" class="datepicker">
               <input id="end-time" type="text" placeholder="请输入开始时间" class="timepicker">
           </div>
         <div class="row">
             <div id="key_name" class="input-field col s6">
-              <input placeholder="请输入查询关键字"  type="text" class="validate">
+              <input id="" placeholder="请输入查询关键字"  type="text" class="validate">
               <label for="key_name">关键词</label>
             </div>
         </div>
@@ -51,7 +51,11 @@
             <a class="waves-effect waves-light btn">查询</a>
         </div>
      </div>
-    <div class="log-content">
+    <div id="log_content" class="log-content">
+      <div id="log_content_search" class="input-field col s6">
+          <input id="log_search_input" type="text" class="validate">
+          <label for="search_input">输入文字进行检索筛选</label>
+      </div>
       <table  id="tb-log" class="display bordered highlight striped">
         <thead>
           <tr>
