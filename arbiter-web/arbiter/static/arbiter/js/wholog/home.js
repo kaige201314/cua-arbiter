@@ -72,42 +72,72 @@ $(document).ready(function() {
         xmlHttp.send(null);                                    //GET发送的内容不再send(）中
     }
     $("#search-btn").click(function () {
-        //startRequest()
-        //loadData();
-        console.log(getStartTime());
+        //加载数据
+        loadData();
 
     });
 
 
 });/*ready end*/
-function setDefaultDateTime() {
-        /*设置默认日期和时间*/
-    var defaultDate=new Array();
-    var currentTime = new Date();
+function getCurrentTime() {
+     var current = new Array();
+     var currentTime = new Date();
 
-    defaultDate[0] = currentTime.getFullYear();
-    defaultDate[1] = currentTime.getMonth()+1;//0-11,要+1
-    defaultDate[2] = currentTime.getDate();
-    var startDate = defaultDate[0]+'-'+defaultDate[1]+'-'+defaultDate[2];
-    var endDate = defaultDate[0]+'-'+defaultDate[1]+'-'+(defaultDate[2]+1);
+    current[0] = currentTime.getFullYear();
+    current[1] = currentTime.getMonth()+1;//0-11,要+1
+    current[2] = currentTime.getDate();
+    return current;
+}
 
-    $('#start-date').val(startDate)
+function setDefaultDateTime() {        /*设置默认日期和时间*/
+    startDate = getDefaultDateTime()[0];
+    endDate = getDefaultDateTime()[1];
+    $('#start-date').val(startDate);
     $('#end-date').val(endDate);
 
-    $('#start-time').val('00:00')
+    $('#start-time').val('00:00');
     $('#end-time').val('00:00');
+
+}
+function getDefaultDateTime() {
+    var currentDate = getCurrentTime();
+    var startDate = currentDate[0]+'-'+currentDate[1]+'-'+currentDate[2];
+    var endDate = currentDate[0]+'-'+currentDate[1]+'-'+(currentDate[2]+1);
+    var defaultDate = new Array;
+    defaultDate[0] = startDate;
+    defaultDate[1] = endDate;
+    return defaultDate;
 
 }
 //获取开始时间，2017-09-07 18:07
 function getStartTime() {
     var date =  $('#start-date').val();
-    var time =  $('#end-time').val();
+    var time =  $('#start-time').val();
+    if (date == "" || date == undefined || date == null){
+        date = getDefaultDateTime()[0];
+    }
+    if (time == "" || time == undefined || time == null){
+        time = getDefaultDateTime()[1];
+    }
     return date+" " + time;
 }
 //获取开始时间，2017-09-07 18:07
 function getEndTime() {
-
+    var date =  $('#end-date').val();
+    var time =  $('#end-time').val();
+    if (date == "" || date == undefined || date == null){
+        date = getDefaultDateTime()[0];
+    }
+    if (time == "" || time == undefined || time == null){
+        time = getDefaultDateTime()[1];
+    }
+    return date+" " + time;
 }
+//获取查询关键字
+function getKeyWords() {
+    return $('#key_name').val();
+}
+
 function loadData() {
      /*init datatables*/
 
@@ -127,10 +157,26 @@ function loadData() {
             { data: "fields.author" },
             { data: "fields.run_time" }
          ],
+         columnDefs: [{
+                //   指定第四列，从0开始，0表示第一列，1表示第二列……
+                "targets": 4,
+                "data": 'fields.log_id',
+                "orderable": false,
+                "width": "10%",
+                "render": function(data, type, row, meta) {
+                    //替换所有-
+                    logIdData = data.replace(/\-/g,"");
+
+                     // return data = '<button class="btn btn-info btn-sm" data-id=' + data + '><i class="fa fa-pencil"></i>Edit</button>';
+                     return data ='<a href="../wholog/logDetail?logId='+logIdData+'" class="waves-effect waves-light btn">查看</a>'
+                }
+            }],
         //使用ajax请求
          ajax:{
              type:'GET',
              url:'../wholog/getAllLog',
+             data:{'startTime':getStartTime(),'endTime':getEndTime(),'keyWords':getKeyWords()},
+             dataType:'json',
              dataSrc: ''
          },
 
@@ -151,8 +197,6 @@ function loadData() {
                 'infoEmpty': '没有数据',
                 'infoFiltered': '(过滤总条数 _MAX_ 条)'
             }
-
-
      });/*table end*/
  // Apply the search
     $('#log_search_input').on( 'keyup', function () {
@@ -161,20 +205,7 @@ function loadData() {
 
 }/*load Data end*/
 
-/* 
-function search(logdata) {
-    var data = logdata['res'];
-    $.each(data, function (i, n) {
-        var row = $("#logData").clone();
-        row.find("#id").text(n.id);
-        row.find("#case-name").text(n.caseName);
-        row.find("#log-data").text(n.logData);
-        row.find("#author").text(n.author);
-        row.find("#begin-time").text(n.beginTime);
-        row.appendTo("#tb-log");//添加到模板的容器中
-    });
-}
-*/
+
 
 
 

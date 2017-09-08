@@ -13,6 +13,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.core import serializers
 from arbiter.models import RunInfo
 import requests
+import datetime
 
 # 日志管理
 from rest_framework.decorators import api_view
@@ -39,32 +40,26 @@ def index(request):
     data =     res.json()  # 返回的数据
 
     return render(request,'home.html')
-@api_view(['GET'])
-def search(request):
-    #根据执行者查询
-    author = request.GET.get('author')
+#去esLi
+def search(id):
     #组合查询DSL
     querybody = {
-        "size":1000,
+        "size": 1000,
         "query": {
-            "bool": {
-                "must": [
-                    {"match": {"author": "hui"}},
-                    # {"match": {"logId": "14d037d8b0b3334f9349f0f5aaea7f90"}}
-                ]
+          "match": {
+            "logId": id
             }
-        },
+          },
         "sort": {"@timestamp": {"order": "desc"}}
+}
 
-        }
+
     res = requests.get('http://' + ES_URL + '/_search', data=json.dumps(querybody))
     #转换成json
     res_json = res.json()
     #符合查询条件的数量
     result_total = res_json['hits']['total']
     #获取source节点
-
-
     result_source = res_json['hits']['hits'][0]['_source']
     #最内层数据
     response_data_dict = {}
@@ -85,15 +80,28 @@ def search(request):
     response_data_list.append(response_data_dict)
     #最终返回的json
     response_data={"data":response_data_list}
-    return  JsonResponse(response_data)
+    return  response_data
 
 @api_view(['GET'])
 def getAllLog(request):
     "获取数据库所有日志列表"
-    log_list = RunInfo.objects.all().order_by('run_time')
+    #获取前台发送来的参数
+    start_time = request.GET.get('startTime')
+    end_time = request.GET.get('endTime')
+    key_word = request.GET.get('keyWords')
+    #将字符串转换成对应数据库日期时间
+    date_from =datetime.datetime.strptime(start_time,'%Y-%m-%d %H:%M')
+    date_to =datetime.datetime.strptime(end_time,'%Y-%m-%d %H:%M')
+    #查询时间范围内的数据库
+    log_list = RunInfo.objects.filter(run_time__range=(date_from,date_to)).order_by('run_time')
     data = serializers.serialize('json',log_list)
     return HttpResponse(data)
 
+@api_view(['GET'])
+def getDetailLog(request):
+    #通过logid 获取具体日志
+    log_id = request.GET.get('logId')
+    return JsonResponse(search(log_id))
 
 
 
