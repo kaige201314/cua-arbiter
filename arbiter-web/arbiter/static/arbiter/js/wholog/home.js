@@ -185,8 +185,8 @@ function loadData() {
                 "width": "10%",
                 "render": function(data, type, row, meta) {
                     //替换所有-
-                    logIdData = data.replace(/\-/g,"");
-                     return  '<a type="button"  onclick=openLogDetail(logIdData) class="waves-effect waves-light btn">查看</a>';
+
+                     return  '<a href="javascript:void(0)" type="button"  onclick=openLogDetail(this) class="waves-effect waves-light btn">查看</a>';
                 }
             }],
         //使用ajax请求
@@ -224,7 +224,11 @@ function loadData() {
 }/*load Data end*/
 
 /*打开日志详情模态框*/
-function openLogDetail(logId){
+function openLogDetail(adata){
+     var logId =  $(adata).parent('td').parent("tr").find("td").eq(0).text();
+     logId = logId.replace(/\-/g,"");
+    /*先清空ul*/
+     $('#log_data li').remove();
      $('#log_detail_modal').modal('open');
      /*打印日志内容*/
     /*ajax请求*/
@@ -233,6 +237,8 @@ function openLogDetail(logId){
           url:'../wholog/queryLogData',
           data:{'logId':logId},
           dataType:'json',
+          cache:false,
+          ifModified:true,
           success:function (data,status) {
               /*循环输出*/
               $.each(data.data,function (i,val) {
